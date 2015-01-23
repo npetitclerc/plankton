@@ -1,0 +1,19 @@
+# Convert images and pad intead of stretching the image
+new_name="train_256_padded"
+
+cp -R train/ $new_name # Quick and dirty way to copy folders structure
+for d in $new_name/*; do
+    echo "Working on... $d"
+    for name in $d/*.jpg; do
+        convert -gravity center -extent 256x256 $name $name
+    done
+done
+
+#for name in /train/*/*.jpg; do
+#    new_name = "/256_padded/$name"
+#    #convert -resize 256x256\! $name $name
+#    #convert -resize 256x256 -gravity center -extent 256x256 $name $new_name 
+#    convert -gravity center -extent 256x256 $name $new_name
+#done
+
+#convert -resize 256x256 -gravity center -extent 256x256 ../plankton/train/amphipods/22289.jpg ../plankton/train/amphipods/22289_.jpg

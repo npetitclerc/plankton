@@ -6,7 +6,7 @@
 EXAMPLE=.
 #DATA=data/ilsvrc12
 DATA=data/256_padded
-TOOLS=../caffe/build/tools
+TOOLS=../../caffe/build/tools
 
 TRAIN_DATA_ROOT=data/256_padded/train/
 VAL_DATA_ROOT=data/256_padded/val/

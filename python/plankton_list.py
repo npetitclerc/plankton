@@ -6,6 +6,7 @@
 import pandas as pd
 import os
 import shutil
+import random
 
 # Paths
 submission_file = "data/raw/sampleSubmission.csv"
@@ -46,15 +47,15 @@ val_file = open(val_list, "w")
 for d in os.listdir(input_folder):
   imgs = os.listdir("/".join([input_folder, d]))
   random.shuffle(imgs)
-  split = split_ratio * len(imgs)
+  split = int(split_ratio * len(imgs))
   imgs_train = imgs[:split]
   imgs_val = imgs[split:]
   
   for img in imgs_train:
-    shutil.copyfile("/".join([input_folder, d, img]), "/".join([train_folder, img]))
+    shutil.move("/".join([input_folder, d, img]), "/".join([train_folder, img]))
     print >> train_file, " ".join([img, planktons[d]])
   for img in imgs_val:
-    shutil.copyfile("/".join([input_folder, d, img]), "/".join([val_folder, img]))
+    shutil.move("/".join([input_folder, d, img]), "/".join([val_folder, img]))
     print >> val_file, " ".join([img, planktons[d]])
 
 train_file.close()

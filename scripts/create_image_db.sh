@@ -5,12 +5,12 @@
 #EXAMPLE=examples/imagenet
 EXAMPLE=.
 #DATA=data/ilsvrc12
-DATA=data/256_padded
+DATA=data/256_scalepad
 TOOLS=../../caffe/build/tools
 
-TRAIN_DATA_ROOT=data/256_padded/train/
-VAL_DATA_ROOT=data/256_padded/val/
-TEST_DATA_ROOT=data/256_padded/test/
+TRAIN_DATA_ROOT=data/256_scalepad/train/
+VAL_DATA_ROOT=data/256_scalepad/val/
+TEST_DATA_ROOT=data/256_scalepad/test/
 
 # Set RESIZE=true to resize the images to 256x256. Leave as false if images have
 # already been resized using another tool.

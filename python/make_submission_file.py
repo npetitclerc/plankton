@@ -6,6 +6,7 @@ Create the prediction file to submit on Kaggle
 import numpy as np
 import caffe
 import os
+import pandas as pd
 
 # Set the right path to your model definition file, pretrained model weights,
 # and the image you would like to classify.
@@ -26,18 +27,19 @@ net = caffe.Classifier(MODEL_FILE, PRETRAINED,
                        
 indexes = pd.read_csv(INDEX_FILE, header=None)
 submission = open(SUBMISSION_FILE, 'w')
-header = ['image'] + indexes.values[:,1]
+header = ['image,'] + indexes.values[:,1]
 print >> submission, ",".join(header)
 
 images_f = os.listdir(IMAGES_FOLDER)
-images =[caffe.io.load_image(im, color=False) for im in images_f]
+images =[caffe.io.load_image(IMAGES_FOLDER + im, color=False) for im in images_f]
 
-predictions = net.predict(images[:10])  # predict takes any number of images, and formats them for the Caffe net automatically
+predictions = net.predict(images)  # predict takes any number of images, and formats them for the Caffe net automatically
 for i, pred in enumerate(predictions):
   print 'prediction shape:', pred.shape
   print 'predicted class:', pred.argmax()
   print 'prediction class:', indexes.iloc[pred.argmax()].values[1]
-  print >> submission, ",".join([images_f[i]] + list(pred))
+  pred = [str(p) for p in pred]
+  print >> submission, ",".join([images_f[i]] + pred)
   
 submission.close()
 

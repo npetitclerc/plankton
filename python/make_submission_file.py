@@ -16,9 +16,9 @@ IMAGES_FOLDER = 'data/256_padded/test/'
 MEAN_FILE = 'data/256_padded/test_mean.npy' # Converted with convert_protomean.py
 INDEX_FILE = "data/plankton_index.csv"
 SUBMISSION_FILE = "caffe/256_padded/submission.csv"
+batch_size = 10000 # Process images by batch if memory is an issue 
 
 caffe.set_phase_test()
-
 net = caffe.Classifier(MODEL_FILE, PRETRAINED,
                        mean=np.load(MEAN_FILE),
                        image_dims=(256, 256),
@@ -31,16 +31,18 @@ header = ['image,'] + indexes.values[:,1]
 print >> submission, ",".join(header)
 
 images_f = os.listdir(IMAGES_FOLDER)
-images =[caffe.io.load_image(IMAGES_FOLDER + im, color=False) for im in images_f]
+n_im = len(images_f)
 
-predictions = net.predict(images)  # predict takes any number of images, and formats them for the Caffe net automatically
-for i, pred in enumerate(predictions):
-  print 'prediction shape:', pred.shape
-  print 'predicted class:', pred.argmax()
-  print 'prediction class:', indexes.iloc[pred.argmax()].values[1]
-  pred = [str(p) for p in pred]
-  print >> submission, ",".join([images_f[i]] + pred)
+for ibatch in xrange(0, n_im, batch_size):
+  print "Processing image ", ibatch, "/", n_im
+  images =[caffe.io.load_image(IMAGES_FOLDER + im, color=False) for im in images_f[ibatch, ibatch + batch_size]]
+
+  predictions = net.predict(images)  # predict takes any number of images, and formats them for the Caffe net automatically
+  for ipred, pred in enumerate(predictions):
+    print 'predicted class:', pred.argmax()
+    pred = [str(p) for p in pred]
+    print >> submission, ",".join([images_f[ibatch + ipred]] + pred)
   
 submission.close()
-
+print "Done. See results in ", SUBMISSION_FILE
  

@@ -1,5 +1,5 @@
 # Convert images and pad intead of stretching the image
-new_name="data/256_padded"
+new_name="data/256_scalepad"
 mkdir $new_name
 
 # Train images
@@ -7,7 +7,8 @@ cp -R data/raw/train $new_name/train_all # Quick and dirty way to copy folders s
 for d in $new_name/train_all/*; do
     echo "Working on... $d"
     for name in $d/*.jpg; do
-        convert -gravity center -extent 256x256 $name $name
+        #convert -gravity center -extent 256x256 $name $name
+        convert -resize 256x256 -gravity center -extent 256x256 $name $name 
     done
 done
 

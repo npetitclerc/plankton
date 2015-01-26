@@ -11,7 +11,8 @@ import random
 # Paths
 submission_file = "data/raw/sampleSubmission.csv"
 index_file_path = "data/plankton_index.csv"
-output_folder = "data/256_scalepad"
+#output_folder = "data/256_scalepad"
+output_folder = "data/256_scale"
 input_folder = output_folder + "/train_all"
 train_list = output_folder + "/train.txt"
 val_list = output_folder + "/val.txt"

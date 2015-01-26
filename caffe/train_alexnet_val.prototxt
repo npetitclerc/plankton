@@ -5,13 +5,13 @@ layers {
   top: "data"
   top: "label"
   data_param {
-    source: "data/256_padded/train_lmdb"
+    source: "data/256_scale/train_lmdb"
     backend: LMDB
     batch_size: 128
   }
   transform_param {
     crop_size: 227
-    mean_file: "data/256_padded/train_mean.binaryproto"
+    mean_file: "data/256_scale/train_mean.binaryproto"
     mirror: true
   }
   include: { phase: TRAIN }
@@ -22,13 +22,13 @@ layers {
   top: "data"
   top: "label"
   data_param {
-    source: "data/256_padded/val_lmdb"
+    source: "data/256_scale/val_lmdb"
     backend: LMDB
     batch_size: 25
   }
   transform_param {
     crop_size: 227
-    mean_file: "data/256_padded/val_mean.binaryproto"
+    mean_file: "data/256_scale/val_mean.binaryproto"
     mirror: false
   }
   include: { phase: TEST }
@@ -318,7 +318,7 @@ layers {
   weight_decay: 1
   weight_decay: 0
   inner_product_param {
-    num_output: 1000
+    num_output: 121
     weight_filler {
       type: "gaussian"
       std: 0.01

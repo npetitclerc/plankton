@@ -10,15 +10,15 @@ import pandas as pd
 
 # Set the right path to your model definition file, pretrained model weights,
 # and the image you would like to classify.
-MODEL_FILE = 'caffe/deploy_alexnet.prototxt'
+MODEL_FILE = 'caffe/64_sp/stride1/deploy_alexnet.prototxt'
 #MODEL_FILE = 'caffe/deploy_alexnet_old.prototxt'
-PRETRAINED = 'caffe/256_scalepad/alexnet_snapshots_scalepad_iter_20000.caffemodel'
+PRETRAINED = 'caffe/64_sp/stride1/snapshots_iter_10000.caffemodel'
 #PRETRAINED = 'caffe/256_padded/alexnet_snapshots_iter_20000.caffemodel'
-IMAGES_FOLDER = 'data/256_scalepad/test/'
-MEAN_FILE = 'data/256_scalepad/test_mean.npy' # Converted with convert_protomean.py
+IMAGES_FOLDER = 'data/64_sp/test/'
+MEAN_FILE = 'data/64_sp/test_mean.npy' # Converted with convert_protomean.py
 INDEX_FILE = "data/plankton_index.csv"
-SUBMISSION_FILE = "caffe/256_scalepad/submission.csv"
-batch_size = 2000 # Process images by batch if memory is an issue 
+SUBMISSION_FILE = "caffe/64_sp/stride1/submission.csv"
+batch_size = 4000 # Process images by batch if memory is an issue 
 
 caffe.set_phase_test()
 caffe.set_mode_gpu()

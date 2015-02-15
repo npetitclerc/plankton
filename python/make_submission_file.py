@@ -24,7 +24,7 @@ caffe.set_phase_test()
 caffe.set_mode_gpu()
 net = caffe.Classifier(MODEL_FILE, PRETRAINED,
                        mean=np.load(MEAN_FILE),
-                       image_dims=(256, 256),
+                       image_dims=(64, 64),
                        raw_scale=255,
                        gpu=True
                        )

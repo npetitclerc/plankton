@@ -11,15 +11,14 @@ import random
 
 def apply_random_transform(img, in_folder, out_folder, append, d, print_file, planktons):
   """ Create a process to make new image with a random affine transformation """  
-  nimg = ''.join([os.split(img)[0], append, os.split(img)[1]]) 
+  nimg = ''.join([os.path.splitext(img)[0], append, os.path.splitext(img)[1]]) 
   new_file = "/".join([out_folder, nimg])
   shutil.copy("/".join([in_folder, d, img]), new_file)
-  
+
   rotation = random.randrange(1, 360)
   scale = random.uniform(0.7, 1.3)
-  shift_x = random.randrange(-5, 5)
-  shift_y = random.randrange(-5, 5)
-  
+  shift_x = random.randrange(-5, 5) + 32
+  shift_y = random.randrange(-5, 5) + 32   
   cmd = ['convert',
         '-resize', '64x64',
         '-gravity', 'center',
@@ -27,8 +26,6 @@ def apply_random_transform(img, in_folder, out_folder, append, d, print_file, pl
         '-distort', 'SRT', '32,32,%.4s,%s,%s,%s'%(scale, rotation, shift_x, shift_y),
         new_file, 
         new_file]
-
-  #convert -resize 64x64 -gravity center -affine .9,-.1,.1,.9,0,0 -transform -extent 64x64 data/raw/train/tunicate_doliolid/1107.jpg toto2.jpg
   p = subprocess.Popen(cmd)
   print >> print_file, " ".join([nimg, planktons[d]])
   return p
@@ -36,10 +33,9 @@ def apply_random_transform(img, in_folder, out_folder, append, d, print_file, pl
 # Paths
 submission_file = "data/raw/sampleSubmission.csv"
 index_file_path = "data/plankton_index.csv"
-#output_folder = "data/256_scalepad"
-#output_folder = "data/256_scale"
 output_folder = "data/64_bal"
-input_folder = output_folder + "/train_all"
+#input_folder = output_folder + "/train_all"
+input_folder = "data/raw/train"
 train_list = output_folder + "/train.txt"
 val_list = output_folder + "/val.txt"
 test_list = output_folder + "/test.txt"
@@ -85,22 +81,7 @@ for d in os.listdir(input_folder):
     processes = []
     for img in imgs_train:
       p = apply_random_transform(img, input_folder, train_folder, append, d, train_file, planktons)
-#      nimg = ''.join([os.split(img)[0], append, os.split(img)[1]]) 
-#      new_file = "/".join([train_folder, nimg])
-#      shutil.copy("/".join([input_folder, d, img]), new_file)
-#      # Apply random transformation
-#      cmd = ['convert',
-#            '-resize', '64x64',
-#            '-gravity', 'center',
-#            '-affine', '.9,-.1,.1,.9,0,0', '-transform',
-#            '-extent', '64x64',
-#            new_file, 
-#            new_file]
-#      #convert -resize 64x64 -gravity center -affine .9,-.1,.1,.9,0,0 -transform -extent 64x64 data/raw/train/tunicate_doliolid/1107.jpg toto2.jpg
-#      p = subprocess.Popen(cmd)
       processes.append(p)
-            
-      #print >> train_file, " ".join([nimg, planktons[d]])
       n_im += 1
       if n_im == split_ratio * nimg_per_class:
         break

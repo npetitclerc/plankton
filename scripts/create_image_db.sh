@@ -3,14 +3,14 @@
 # N.B. set the path to the imagenet train + val data dirs
 
 EXAMPLE=.
-DATA=data/64_sp
+DATA=data/64_bal
 #DATA=data/256_scalepad
 #DATA=data/256_scalepad
 TOOLS=../../caffe/build/tools
 
-TRAIN_DATA_ROOT=data/64_sp/train/
-VAL_DATA_ROOT=data/64_sp/val/
-TEST_DATA_ROOT=data/64_sp/test/
+TRAIN_DATA_ROOT=data/64_bal/train/
+VAL_DATA_ROOT=data/64_bal/val/
+TEST_DATA_ROOT=data/64_bal/test/
 
 # Set RESIZE=true to resize the images to 256x256. Leave as false if images have
 # already been resized using another tool.
@@ -43,27 +43,27 @@ if [ ! -d "$TEST_DATA_ROOT" ]; then
 fi
 echo "Creating train lmdb..."
 
-GLOG_logtostderr=1 $TOOLS/convert_imageset \
-    --resize_height=$RESIZE_HEIGHT \
-    --resize_width=$RESIZE_WIDTH \
-    --shuffle \
-    --gray \
-    $TRAIN_DATA_ROOT \
-    $DATA/train.txt \
-    $DATA/train_lmdb
+#GLOG_logtostderr=1 $TOOLS/convert_imageset \
+#    --resize_height=$RESIZE_HEIGHT \
+#    --resize_width=$RESIZE_WIDTH \
+#    --shuffle \
+#    --gray \
+#    $TRAIN_DATA_ROOT \
+#    $DATA/train.txt \
+#    $DATA/train_lmdb
 
 echo "Creating val lmdb..."
 
-GLOG_logtostderr=1 $TOOLS/convert_imageset \
-    --resize_height=$RESIZE_HEIGHT \
-    --resize_width=$RESIZE_WIDTH \
-    --shuffle \
-    --gray \
-    $VAL_DATA_ROOT \
-    $DATA/val.txt \
-    $DATA/val_lmdb
+#GLOG_logtostderr=1 $TOOLS/convert_imageset \
+#    --resize_height=$RESIZE_HEIGHT \
+#    --resize_width=$RESIZE_WIDTH \
+#    --shuffle \
+#    --gray \
+#    $VAL_DATA_ROOT \
+#    $DATA/val.txt \
+#    $DATA/val_lmdb
 
-#echo "Creating test lmdb..."
+echo "Creating test lmdb..."
 
 GLOG_logtostderr=1 $TOOLS/convert_imageset \
     --resize_height=$RESIZE_HEIGHT \

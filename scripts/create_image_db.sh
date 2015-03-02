@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
-# Create the imagenet lmdb inputs
-# N.B. set the path to the imagenet train + val data dirs
+# Create the lmdb images inputs
+# N.B. set the path to the train + val data dirs
 
 EXAMPLE=.
 DATA=data/64_sp
@@ -23,18 +23,18 @@ else
   RESIZE_WIDTH=0
 fi
 
-if [ ! -d "$TRAIN_DATA_ROOT" ]; then
-  echo "Error: TRAIN_DATA_ROOT is not a path to a directory: $TRAIN_DATA_ROOT"
-  echo "Set the TRAIN_DATA_ROOT variable in create_imagenet.sh to the path" \
-       "where the ImageNet training data is stored."
-  exit 1
-fi
-if [ ! -d "$VAL_DATA_ROOT" ]; then
-  echo "Error: VAL_DATA_ROOT is not a path to a directory: $VAL_DATA_ROOT"
-  echo "Set the VAL_DATA_ROOT variable in create_imagenet.sh to the path" \
-       "where the ImageNet validation data is stored."
-  exit 1
-fi
+#if [ ! -d "$TRAIN_DATA_ROOT" ]; then
+#  echo "Error: TRAIN_DATA_ROOT is not a path to a directory: $TRAIN_DATA_ROOT"
+#  echo "Set the TRAIN_DATA_ROOT variable in create_imagenet.sh to the path" \
+#       "where the ImageNet training data is stored."
+#  exit 1
+#fi
+#if [ ! -d "$VAL_DATA_ROOT" ]; then
+#  echo "Error: VAL_DATA_ROOT is not a path to a directory: $VAL_DATA_ROOT"
+#  echo "Set the VAL_DATA_ROOT variable in create_imagenet.sh to the path" \
+#       "where the ImageNet validation data is stored."
+#  exit 1
+#fi
 if [ ! -d "$TEST_DATA_ROOT" ]; then
   echo "Error: TEST_DATA_ROOT is not a path to a directory: $TEST_DATA_ROOT"
   echo "Set the TEST_DATA_ROOT variable in create_imagenet.sh to the path" \
@@ -43,25 +43,25 @@ if [ ! -d "$TEST_DATA_ROOT" ]; then
 fi
 echo "Creating train lmdb..."
 
-GLOG_logtostderr=1 $TOOLS/convert_imageset \
-    --resize_height=$RESIZE_HEIGHT \
-    --resize_width=$RESIZE_WIDTH \
-    --shuffle \
-    --gray \
-    $TRAIN_DATA_ROOT \
-    $DATA/train.txt \
-    $DATA/train_lmdb
+#GLOG_logtostderr=1 $TOOLS/convert_imageset \
+#    --resize_height=$RESIZE_HEIGHT \
+#    --resize_width=$RESIZE_WIDTH \
+#    --shuffle \
+#    --gray \
+#    $TRAIN_DATA_ROOT \
+#    $DATA/train.txt \
+#    $DATA/train_lmdb
 
-echo "Creating val lmdb..."
+#echo "Creating val lmdb..."
 
-GLOG_logtostderr=1 $TOOLS/convert_imageset \
-    --resize_height=$RESIZE_HEIGHT \
-    --resize_width=$RESIZE_WIDTH \
-    --shuffle \
-    --gray \
-    $VAL_DATA_ROOT \
-    $DATA/val.txt \
-    $DATA/val_lmdb
+#GLOG_logtostderr=1 $TOOLS/convert_imageset \
+#    --resize_height=$RESIZE_HEIGHT \
+#    --resize_width=$RESIZE_WIDTH \
+#    --shuffle \
+#    --gray \
+#    $VAL_DATA_ROOT \
+#    $DATA/val.txt \
+#    $DATA/val_lmdb
 
 #echo "Creating test lmdb..."
 

@@ -80,13 +80,14 @@ for d in os.listdir(input_folder):
    
   n_im = 0
   append = ''
-  while n_im < split_ratio * nimgs: #nimg_per_class: 
+  n_im_max = split_ratio * nimgs * aug_factor
+  while n_im < n_im_max: 
     processes = []
     for img in imgs_train:
       p = apply_random_transform(img, input_folder, train_folder, append, d, train_file, planktons)
       processes.append(p)
       n_im += 1
-      if n_im == split_ratio * nimgs: #nimg_per_class:
+      if n_im == n_im_max:
         break
     append += '_'  
     for p in processes:
@@ -94,13 +95,14 @@ for d in os.listdir(input_folder):
       
   n_im = 0
   append = ''    
-  while n_im < (1. - split_ratio) * nimgs: #nimg_per_class: 
+  n_im_max = (1. - split_ratio) * nimgs * aug_factor
+  while n_im < n_im_max: 
     processes = []
     for img in imgs_val:
       p = apply_random_transform(img, input_folder, val_folder, append, d, val_file, planktons)
       processes.append(p)
       n_im += 1
-      if n_im == split_ratio * nimgs: #nimg_per_class:
+      if n_im == n_im_max:
         break
     append += '_'  
     for p in processes:

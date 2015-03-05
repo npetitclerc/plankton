@@ -1,4 +1,4 @@
-net: "caffe/64_aug/gnet/train.prototxt"
+net: "caffe/256_scalepad/gnet/train.prototxt"
 test_iter: 612
 test_interval: 1000
 test_initialization: false
@@ -12,6 +12,6 @@ max_iter: 355000
 momentum: 0.9
 weight_decay: 0.0002
 snapshot: 5000
-snapshot_prefix: "caffe/64_aug/gnet/snapshots"
+snapshot_prefix: "caffe/256_scalepad/gnet/snapshots"
 solver_mode: GPU
 

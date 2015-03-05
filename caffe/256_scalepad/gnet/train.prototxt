@@ -5,8 +5,8 @@ layers {
   name: "data"
   type: DATA
   data_param {
-    source: "data/64_aug/train_lmdb"
-    batch_size: 32
+    source: "data/256_scalepad/train_lmdb"
+    batch_size: 25
     backend: LMDB
   }
   include {
@@ -14,8 +14,8 @@ layers {
   }
   transform_param {
     mirror: true
-    crop_size: 60
-    mean_file: "data/64_aug/train_mean.binaryproto"
+    crop_size: 224
+    mean_file: "data/256_scalepad/train_mean.binaryproto"
     # mean_value: 104
     # mean_value: 117
     # mean_value: 123
@@ -27,7 +27,7 @@ layers {
   name: "data"
   type: DATA
   data_param {
-    source: "data/64_aug/val_lmdb"
+    source: "data/256_scalepad/val_lmdb"
     batch_size: 50
     backend: LMDB
   }
@@ -36,8 +36,8 @@ layers {
   }
   transform_param {
     mirror: false
-    crop_size: 60
-    mean_file: "data/64_aug/val_mean.binaryproto"
+    crop_size: 224
+    mean_file: "data/256_scalepad/val_mean.binaryproto"
     # mean_value: 104
     # mean_value: 117
     # mean_value: 123

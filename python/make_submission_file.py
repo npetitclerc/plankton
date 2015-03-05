@@ -13,21 +13,21 @@ import zipfile
 
 # Set the right path to your model definition file, pretrained model weights,
 # and the image you would like to classify.
-MODEL_FILE = 'caffe/64_aug/stride2/deploy_alexnet.prototxt'
+MODEL_FILE = 'caffe/256_scalepad/gnet/deploy.prototxt'
 #MODEL_FILE = 'caffe/deploy_alexnet_old.prototxt'
-PRETRAINED = 'caffe/64_aug/stride2/snapshots_iter_34000.caffemodel'
+PRETRAINED = 'caffe/256_scalepad/gnet/snapshots_iter_30000.caffemodel'
 #PRETRAINED = 'caffe/256_padded/alexnet_snapshots_iter_20000.caffemodel'
-IMAGES_FOLDER = 'data/64_aug/test/'
-MEAN_FILE = 'data/64_aug/test_mean.npy' # Converted with convert_protomean.py
+IMAGES_FOLDER = 'data/256_scalepad/test/'
+MEAN_FILE = 'data/256_scalepad/test_mean.npy' # Converted with convert_protomean.py
 INDEX_FILE = "data/plankton_index.csv"
-SUBMISSION_FILE = "caffe/64_aug/stride2/submission_34k.csv"
-batch_size = 4000 # Process images by batch if memory is an issue 
+SUBMISSION_FILE = "caffe/256_scalepad/gnet/submission_30k.csv"
+batch_size = 3000 # Process images by batch if memory is an issue 
 
 caffe.set_phase_test()
 caffe.set_mode_gpu()
 net = caffe.Classifier(MODEL_FILE, PRETRAINED,
                        mean=np.load(MEAN_FILE),
-                       image_dims=(64, 64),
+                       image_dims=(256, 256),
                        raw_scale=255,
                        gpu=True
                        )

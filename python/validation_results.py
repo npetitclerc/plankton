@@ -11,19 +11,19 @@ import pandas as pd
 
 # Set the right path to your model definition file, pretrained model weights,
 # and the image you would like to classify.
-MODEL_FILE = 'caffe/256_scalepad/gnet/deploy.prototxt'
-PRETRAINED = 'caffe/256_scalepad/gnet/snapshots_iter_30000.caffemodel'
-IMAGES_FOLDER = 'data/256_scalepad/val/'
-MEAN_FILE = 'data/256_scalepad/val_mean.npy' # Converted with convert_protomean.py
+MODEL_FILE = 'caffe/64_aug/stride1/deploy.prototxt'
+PRETRAINED = 'caffe/64_aug/stride1/snapshots_iter_12000.caffemodel'
+IMAGES_FOLDER = 'data/64_aug/val/'
+MEAN_FILE = 'data/64_aug/val_mean.npy' # Converted with convert_protomean.py
 INDEX_FILE = "data/plankton_index.csv"
-Y_FILE = 'data/256_scalepad/val.txt'
+Y_FILE = 'data/64_aug/val.txt'
 batch_size = 2500 # Process images by batch if memory is an issue 
 
 caffe.set_phase_test()
 caffe.set_mode_gpu()
 net = caffe.Classifier(MODEL_FILE, PRETRAINED,
                        mean=np.load(MEAN_FILE),
-                       image_dims=(256, 256),
+                       image_dims=(64, 64),
                        raw_scale=255,
                        gpu=True
                        )

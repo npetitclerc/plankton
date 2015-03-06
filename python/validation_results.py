@@ -7,7 +7,7 @@ import numpy as np
 import caffe
 import os, time
 import pandas as pd
-
+import pickle
 
 # Set the right path to your model definition file, pretrained model weights,
 # and the image you would like to classify.
@@ -17,6 +17,10 @@ IMAGES_FOLDER = 'data/64_aug/val/'
 MEAN_FILE = 'data/64_aug/val_mean.npy' # Converted with convert_protomean.py
 INDEX_FILE = "data/plankton_index.csv"
 Y_FILE = 'data/64_aug/val.txt'
+VAL_FILE = "caffe/64_aug/stride1/val_30k.csv"
+MEAN_ERR_FILE = 'caffe/64_aug/stride1/mean_err.pkl'
+MEAN_NERR_FILE = 'caffe/64_aug/stride1/mean_nerr.pkl'  
+
 batch_size = 2500 # Process images by batch if memory is an issue 
 
 caffe.set_phase_test()
@@ -30,6 +34,9 @@ net = caffe.Classifier(MODEL_FILE, PRETRAINED,
                        
 indexes = pd.read_csv(INDEX_FILE, header=None).values
 y_val = pd.read_csv(Y_FILE, header=None, sep=' ').values
+val = open(VAL_FILE, 'w')
+header = ['image'] + list(indexes.values[:,1])
+print >> val, ",".join(header)
 
 images_f = os.listdir(IMAGES_FOLDER)
 n_im = len(images_f)
@@ -52,7 +59,10 @@ for ibatch in xrange(0, n_im, batch_size):
     if pred.argmax() != y_val[ipred, 1]:
       num_err[pred.argmax()] += 1
       num_err[y_val[ipred, 1]] += 1
-      
+    print >> val, ",".join([images_f[ibatch + ipred]] + pred)
+
+val.close()
+  
 mean_err = err_sum / val_per_class
 mean_nerr = num_err / val_per_class * 100.
 
@@ -65,4 +75,12 @@ print "Mean Number of Error (%):"
 m_sort = np.argsort(mean_nerr)[::-1]
 for i in m_sort:
   print indexes[i, 1], mean_nerr[i] 
+  
+f = open(MEAN_ERR_FILE, 'wb')
+pickle.dump(mean_err, f)
+f.close()
+f = open(MEAN_NERR_FILE, 'wb')
+pickle.dump(mean_nerr, f)
+f.close()
+  
   

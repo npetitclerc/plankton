@@ -11,7 +11,7 @@ import pandas as pd
 
 # Set the right path to your model definition file, pretrained model weights,
 # and the image you would like to classify.
-MODEL_FILE = 'caffe/64_aug/stride1/deploy.prototxt'
+MODEL_FILE = 'caffe/64_aug/stride1/deploy_alexnet.prototxt'
 PRETRAINED = 'caffe/64_aug/stride1/snapshots_iter_12000.caffemodel'
 IMAGES_FOLDER = 'data/64_aug/val/'
 MEAN_FILE = 'data/64_aug/val_mean.npy' # Converted with convert_protomean.py

@@ -36,6 +36,27 @@ def apply_random_transform(img, in_folder, out_folder, append, d, print_file, pl
     p = None
   return p
 
+def scale_test_images(img, in_folder, out_folder, d, print_file, planktons):
+  """ Create a process to make convert a test image """  
+  new_file = "/".join([out_folder, img])
+  try:
+    shutil.copy("/".join([in_folder, d, img]), new_file)
+    print >> print_file, " ".join([img, planktons[d]])
+ 
+    cmd = ['convert',
+        '-resize', '256x256!',
+        #'-resize', '256x256',
+        #'-gravity', 'center',
+        #'-extent', '256x256',
+        new_file, 
+        new_file]
+    p = subprocess.Popen(cmd)
+  except:
+    print "Crashed! - test image"
+    print "Working on: ", new_file
+    p = None
+  return p
+
 # Paths
 submission_file = "data/raw/sampleSubmission.csv"
 index_file_path = "data/plankton_index.csv"
@@ -99,18 +120,10 @@ for d in os.listdir(input_folder):
     for p in processes:
       p.wait()
       
-  n_im = 0
-  append = ''    
-  n_im_max = (1. - split_ratio) * nimgs * aug_factor
-  while n_im < n_im_max: 
-    processes = []
-    for img in imgs_val:
-      p = apply_random_transform(img, input_folder, val_folder, append, d, val_file, planktons)
-      processes.append(p)
-      n_im += 1
-      if n_im == n_im_max:
-        break
-    append += '_'  
+  processes = []
+  for img in imgs_val:
+    p = scale_test_images(img, input_folder, val_folder, d, val_file, planktons)
+    processes.append(p)
     for p in processes:
       p.wait()
 

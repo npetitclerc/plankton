@@ -13,14 +13,14 @@ import zipfile
 
 # Set the right path to your model definition file, pretrained model weights,
 # and the image you would like to classify.
-MODEL_FILE = 'caffe/256_scalepad/gnet/deploy.prototxt'
+MODEL_FILE = 'caffe/256_scale_aug/gnet/deploy.prototxt'
 #MODEL_FILE = 'caffe/deploy_alexnet_old.prototxt'
-PRETRAINED = 'caffe/256_scalepad/gnet/snapshots_iter_30000.caffemodel'
+PRETRAINED = 'caffe/256_scale_aug/gnet/snapshots_iter_60000.caffemodel'
 #PRETRAINED = 'caffe/256_padded/alexnet_snapshots_iter_20000.caffemodel'
-IMAGES_FOLDER = 'data/256_scalepad/test/'
-MEAN_FILE = 'data/256_scalepad/test_mean.npy' # Converted with convert_protomean.py
+IMAGES_FOLDER = 'data/256_scale/test/'
+MEAN_FILE = 'data/256_scale/test_mean.npy' # Converted with convert_protomean.py
 INDEX_FILE = "data/plankton_index.csv"
-SUBMISSION_FILE = "caffe/256_scalepad/gnet/submission_30k.csv"
+SUBMISSION_FILE = "caffe/256_scale_aug/gnet/submission_60k.csv"
 batch_size = 3000 # Process images by batch if memory is an issue 
 
 caffe.set_phase_test()
@@ -53,7 +53,7 @@ for ibatch in xrange(0, n_im, batch_size):
   print 'predicted classes:', pp
 submission.close()
 
-zf = zipfile.ZipFile(SUBMISSION_FILE + '.zip', mode='w')
+zf = zipfile.ZipFile(SUBMISSION_FILE + '.zip', mode='w', zipfile.ZIP_DEFLATED)
 try:
   print 'Zipping submission file'
   zf.write(SUBMISSION_FILE)

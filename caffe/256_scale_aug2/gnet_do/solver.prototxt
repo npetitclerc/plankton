@@ -1,0 +1,22 @@
+net: "caffe/256_scale_aug2/gnet_do/train.prototxt"
+test_iter: 612
+test_interval: 2500
+test_initialization: false
+display: 2500
+average_loss: 100
+base_lr: 0.01
+
+#lr_policy: "step"
+#stepsize: 100000
+#gamma: 0.96
+
+lr_policy: "poly"
+power: 0.5
+
+max_iter: 200000
+momentum: 0.9
+weight_decay: 0.0005
+snapshot: 5000
+snapshot_prefix: "caffe/256_scale_aug2/gnet_do/snapshots"
+solver_mode: GPU
+

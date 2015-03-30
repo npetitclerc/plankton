@@ -15,8 +15,6 @@ Order of steps:
 
 python python/convert_protomean.py data/256_scale/test_mean.binaryproto data/256_scale/test_mean.npy
 
-python python/convert_protomean.py data/64_sp/test_mean.binaryproto data/64_sp/test_mean.npy
-
 6 - Then can delete /data/xxx/test_lmdb
 
 ## Training
